@@ -29,6 +29,19 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        #capture-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #capture-btn:disabled {
+            background-color: gray;
+        }
     </style>
 </head>
 <body>
@@ -55,18 +68,20 @@
             console.error("Error accessing camera: " + err);
         });
 
-        // Capture plate and run OCR
+        // Capture plate and run OCR automatically
         captureButton.addEventListener('click', () => {
             loader.style.display = 'block'; // Show loader
+            captureButton.disabled = true; // Disable button during scanning
 
             // Dynamically set the canvas size based on the video dimensions
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
 
             const context = canvas.getContext('2d');
+            // Draw the current frame of the video onto the canvas (this "snaps" the image)
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            // Get image data from canvas
+            // Get image data from canvas as a base64 URL
             const imageData = canvas.toDataURL();
 
             // Use Tesseract.js for OCR
@@ -80,10 +95,12 @@
                 const plateNumber = text.trim(); // Extracted plate number
                 localStorage.setItem('plateNumber', plateNumber); // Save number for next page
                 loader.style.display = 'none'; // Hide loader
+                captureButton.disabled = false; // Re-enable button
                 window.location.href = 'result.html'; // Redirect to result page
             }).catch(err => {
                 console.error('OCR Error: ', err);
                 loader.style.display = 'none'; // Hide loader
+                captureButton.disabled = false; // Re-enable button
             });
         });
     </script>
