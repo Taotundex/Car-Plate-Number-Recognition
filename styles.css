@@ -1,0 +1,31 @@
+body {
+	font-family: Arial, sans-serif;
+}
+
+#plate-form {
+	margin: 20px;
+}
+
+#plate-number {
+	width: 200px;
+	height: 30px;
+	font-size: 18px;
+	padding: 10px;
+}
+
+#scan-plate {
+	background-color: #4CAF50;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#scan-plate:hover {
+	background-color: #3e8e41;
+}
+
+#plate-details {
+	margin-top: 20px;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Car Plate Number Recognition</title>
+	<style>
+		/* Add some basic styling */
+		body {
+			font-family: Arial, sans-serif;
+		}
+		#upload-image {
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Car Plate Number Recognition</h1>
+	<input type="file" id="upload-image" accept="image/*">
+	<button id="recognize-button">Recognize Plate Number</button>
+	<div id="result"></div>
+
+	<!-- <script src="(link unavailable)"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+	<script>
+        const uploadImageInput = document.getElementById('upload-image');
+        const recognizeButton = document.getElementById('recognize-button');
+        const resultDiv = document.getElementById('result');
+
+        recognizeButton.addEventListener('click', async () => {
+            const image = uploadImageInput.files[0];
+            if (!image) {
+                alert('Please upload an image first');
+                return;
+            }
+
+            Tesseract.recognize(image, 'eng', {
+                logger: m => console.log(m)
+            }).then(({ data }) => {
+                const plateNumber = data.text.trim();
+                resultDiv.innerText = `Plate Number: ${plateNumber}`;
+            });
+        });
+
+    </script>
+</body>
+</html>

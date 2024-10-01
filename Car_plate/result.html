@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plate Number Result</title>
+</head>
+<body>
+    <h1>Scanned Plate Number</h1>
+    <p id="plate-number"></p>
+
+    <script>
+        const plateNumber = localStorage.getItem('plateNumber');
+        document.getElementById('plate-number').innerText = plateNumber ? plateNumber : "No plate number found.";
+    </script>
+</body>
+</html>

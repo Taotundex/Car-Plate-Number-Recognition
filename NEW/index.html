@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Plate Number Recognition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Car Plate Number Recognition</h1>
+        <form id="car-plate-form">
+            <label for="plate-image">Upload Car Plate Image:</label>
+            <input type="file" id="plate-image" accept="image/*" required><br>
+            <button type="button" id="recognize-btn">Recognize Plate Number</button>
+        </form>
+        <div id="result">
+            <h2>Recognized Plate Number:</h2>
+            <p id="plate-number">Waiting for result...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
