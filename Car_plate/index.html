@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Plate Number Scanner</title>
+    <title>Car Plate Number Scanner (Upload Image)</title>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.4/dist/tesseract.min.js"></script>
     <style>
-        #camera-stream {
+        #uploaded-image {
             width: 100%; /* Adjust to mobile screen width */
-            height: auto; /* Keep aspect ratio */
             max-width: 600px; /* Set a max width for larger screens */
+            display: none;
+            margin-top: 20px;
         }
+
         #loader {
             display: none;
             border: 16px solid #f3f3f3;
@@ -30,7 +32,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        #capture-btn {
+        #upload-btn {
             margin-top: 20px;
             padding: 10px 20px;
             background-color: #3498db;
@@ -39,37 +41,40 @@
             cursor: pointer;
         }
 
-        #capture-btn:disabled {
+        #upload-btn:disabled {
             background-color: gray;
         }
     </style>
 </head>
 <body>
-    <h1>Car Plate Number Scanner</h1>
-    <video id="camera-stream" autoplay playsinline></video>
+    <h1>Upload Car Plate Image for Scanning</h1>
+    <input type="file" id="image-upload" accept="image/*">
+    <img id="uploaded-image" src="" alt="Uploaded Image">
     <canvas id="capture-canvas" style="display: none;"></canvas>
-    <button id="capture-btn">Capture Plate</button>
+    <button id="upload-btn">Start Scanning</button>
     <div id="loader">Loading...</div>
 
     <script>
-        const video = document.getElementById('camera-stream');
+        const uploadInput = document.getElementById('image-upload');
+        const imageElement = document.getElementById('uploaded-image');
         const canvas = document.getElementById('capture-canvas');
         const loader = document.getElementById('loader');
-        const captureButton = document.getElementById('capture-btn');
+        const uploadButton = document.getElementById('upload-btn');
 
-        // Access the rear camera
-        navigator.mediaDevices.getUserMedia({
-            video: { 
-                facingMode: { ideal: 'environment' }, // Request rear camera
-                width: { ideal: 1280 },  // Higher resolution
-                height: { ideal: 720 }
+        let imageLoaded = false;
+
+        // Show uploaded image preview
+        uploadInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageElement.src = e.target.result;
+                    imageElement.style.display = 'block'; // Show the image
+                    imageLoaded = true; // Indicate that an image has been loaded
+                };
+                reader.readAsDataURL(file);
             }
-        })
-        .then(stream => {
-            video.srcObject = stream;
-        })
-        .catch(err => {
-            console.error("Error accessing camera: " + err);
         });
 
         // Preprocess image: Convert to grayscale for better OCR accuracy
@@ -88,44 +93,55 @@
             context.putImageData(imageData, 0, 0);
         }
 
-        // Capture plate and run OCR automatically
-        captureButton.addEventListener('click', () => {
-            loader.style.display = 'block'; // Show loader
-            captureButton.disabled = true;  // Disable button during scanning
+        // Handle the "Start Scanning" button click
+        uploadButton.addEventListener('click', () => {
+            if (!imageLoaded) {
+                alert('Please upload an image first!');
+                return;
+            }
 
-            // Dynamically set the canvas size based on the video dimensions
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            loader.style.display = 'block'; // Show loader
+            uploadButton.disabled = true;  // Disable button during scanning
 
             const context = canvas.getContext('2d');
-            // Draw the current frame of the video onto the canvas (this "snaps" the image)
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const img = new Image();
 
-            // Preprocess the image for better OCR accuracy
-            preprocessImage(context, canvas);
+            img.onload = function() {
+                // Dynamically set the canvas size based on the uploaded image dimensions
+                canvas.width = img.width;
+                canvas.height = img.height;
+                
+                // Draw the uploaded image onto the canvas
+                context.drawImage(img, 0, 0);
 
-            // Get image data from canvas as a base64 URL
-            const imageData = canvas.toDataURL();
+                // Preprocess the image for better OCR accuracy
+                preprocessImage(context, canvas);
 
-            // Use Tesseract.js for OCR
-            Tesseract.recognize(
-                imageData,
-                'eng',
-                {
-                    tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', // Only allow characters from car plates
-                    psm: 7 // Treat the image as a single line of text
-                }
-            ).then(({ data: { text } }) => {
-                const plateNumber = text.trim(); // Extracted plate number
-                localStorage.setItem('plateNumber', plateNumber); // Save number for next page
-                loader.style.display = 'none'; // Hide loader
-                captureButton.disabled = false; // Re-enable button
-                window.location.href = 'https://car-plate-alpha.vercel.app/Car_plate/result.html'; // Redirect to result page
-            }).catch(err => {
-                console.error('OCR Error: ', err);
-                loader.style.display = 'none'; // Hide loader
-                captureButton.disabled = false; // Re-enable button
-            });
+                // Get image data from canvas as a base64 URL
+                const imageData = canvas.toDataURL();
+
+                // Use Tesseract.js for OCR
+                Tesseract.recognize(
+                    imageData,
+                    'eng',
+                    {
+                        tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', // Only allow characters from car plates
+                        psm: 7 // Treat the image as a single line of text
+                    }
+                ).then(({ data: { text } }) => {
+                    const plateNumber = text.trim(); // Extracted plate number
+                    localStorage.setItem('plateNumber', plateNumber); // Save number for next page
+                    loader.style.display = 'none'; // Hide loader
+                    uploadButton.disabled = false; // Re-enable button
+                    window.location.href = 'result.html'; // Redirect to result page
+                }).catch(err => {
+                    console.error('OCR Error: ', err);
+                    loader.style.display = 'none'; // Hide loader
+                    uploadButton.disabled = false; // Re-enable button
+                });
+            };
+
+            img.src = imageElement.src; // Set the image source from the preview
         });
     </script>
 </body>
