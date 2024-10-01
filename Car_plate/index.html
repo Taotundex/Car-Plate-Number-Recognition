@@ -76,6 +76,15 @@
                 loader.style.display = 'none'; // Hide loader
             });
         });
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { ideal: 'environment' } } // Request rear camera
+        })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => {
+            console.error("Error accessing camera: " + err);
+        });
     </script>
 </body>
 </html>
