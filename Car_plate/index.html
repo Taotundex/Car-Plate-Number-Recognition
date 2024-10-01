@@ -80,7 +80,7 @@
                 const plateNumber = text.trim(); // Extracted plate number
                 localStorage.setItem('plateNumber', plateNumber); // Save number for next page
                 loader.style.display = 'none'; // Hide loader
-                window.location.href = 'result.html'; // Redirect to result page
+                window.location.href = '/result.html'; // Redirect to result page
             }).catch(err => {
                 console.error('OCR Error: ', err);
                 loader.style.display = 'none'; // Hide loader
