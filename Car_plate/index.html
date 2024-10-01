@@ -77,17 +77,18 @@
             }
         });
 
-        // Preprocess image: Convert to grayscale for better OCR accuracy
+        // Preprocess image: Convert to grayscale and apply binarization (black and white)
         function preprocessImage(context, canvas) {
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
 
-            // Convert to grayscale
+            // Convert to grayscale and binarize
             for (let i = 0; i < data.length; i += 4) {
                 const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                data[i] = avg;        // Red
-                data[i + 1] = avg;    // Green
-                data[i + 2] = avg;    // Blue
+                const binarizedValue = avg > 128 ? 255 : 0; // Binarization (Black and White)
+                data[i] = binarizedValue;        // Red
+                data[i + 1] = binarizedValue;    // Green
+                data[i + 2] = binarizedValue;    // Blue
             }
 
             context.putImageData(imageData, 0, 0);
@@ -126,14 +127,14 @@
                     'eng',
                     {
                         tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', // Only allow characters from car plates
-                        psm: 7 // Treat the image as a single line of text
+                        psm: 6 // Fully automatic page segmentation, single block of text
                     }
                 ).then(({ data: { text } }) => {
                     const plateNumber = text.trim(); // Extracted plate number
                     localStorage.setItem('plateNumber', plateNumber); // Save number for next page
                     loader.style.display = 'none'; // Hide loader
                     uploadButton.disabled = false; // Re-enable button
-                    window.location.href = 'https://car-plate-alpha.vercel.app/Car_plate/result.html'; // Redirect to result page
+                    window.location.href = 'result.html'; // Redirect to result page
                 }).catch(err => {
                     console.error('OCR Error: ', err);
                     loader.style.display = 'none'; // Hide loader
