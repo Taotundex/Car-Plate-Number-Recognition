@@ -14,6 +14,7 @@ body {
     width: 100%;
 }
 .upload-container {
+    margin: 0 auto;
     width: 500px;
     padding: 35px;
     background: #ffffffce !important;
@@ -44,7 +45,7 @@ body {
 #uploaded-image {
     width: 100%; /* Adjust to mobile screen width */
     max-width: 100%; /* Set a max width for larger screens */
-    height: 100%;
+    height: 150px;
     display: none;
     /* margin-top: 20px; */
 }
@@ -81,12 +82,12 @@ body {
 #upload-btn:disabled {
     background-color: gray;
 }
-.height {
+/* .height {
     height: 300px;
-}
+} */
 #capture-canvas {
     /* display: none; */
-    height: 100%;
+    height: 150px !important;
     width: 100%;
 }
 
@@ -101,11 +102,27 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: 175px;
+  height: 150px;
   border: 2px dashed #3498db80;
   align-items: center;
   text-align: center;
   padding: 5px;
   color: #404040;
   cursor: pointer;
+}
+
+
+@media screen and (max-width: 550px) {
+    .upload-container {
+        width: 95% !important;
+        padding: 20px;
+    }
+    /* .upload-container h1 {
+        font-size: 18px;
+    } */
+    .upload-container .plate {
+        width: 100%;
+        height: 75px;
+        font-size: 30px;
+    }
 }

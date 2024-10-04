@@ -87,3 +87,12 @@ uploadButton.addEventListener('click', () => {
 
     img.src = imageElement.src; // Set the image source from the preview
 });
+
+// Clear the uploaded image and reset the page
+//  const clearButton = document.getElementById('clear-btn');
+// clearButton.addEventListener('click', () => {
+//     imageElement.style.display = 'none'; // Hide the image
+//     imageLoaded = false; // Reset imageLoaded flag
+//     localStorage.removeItem('plateNumber'); // Remove saved plate number
+//     window.location.reload(); // Refresh the page
+// });
