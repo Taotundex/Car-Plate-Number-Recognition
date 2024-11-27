@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body {
-    background: url(images/background.jpg);
+    background: linear-gradient(75deg, #3498db 50%, transparent 50%), url(images/background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -18,7 +18,7 @@ body {
     width: 500px;
     padding: 35px;
     background: #ffffffce !important;
-    backdrop-filter: blur(50px);
+    backdrop-filter: blur(20px);
     border-radius: 10px;
     border: 2px solid #54baac80;
 }
