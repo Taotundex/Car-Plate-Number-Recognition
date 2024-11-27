@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multistep Form</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.nav-btn {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.nav-btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.submit-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="multiStepForm">
+            <!-- Step 1: User Details -->
+            <div class="form-step active">
+                <h2>User Details</h2>
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" required>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <!-- Step 2: Car Details -->
+            <div class="form-step">
+                <h2>Car Details</h2>
+                <label for="plateNumber">Plate Number:</label>
+                <input type="text" id="plateNumber" name="plateNumber" required>
+                <label for="carModel">Car Make and Model:</label>
+                <input type="text" id="carModel" name="carModel" required>
+                <label for="carColor">Car Color:</label>
+                <input type="text" id="carColor" name="carColor" required>
+            </div>
+
+            <!-- Step 3: Confirm and Submit -->
+            <div class="form-step">
+                <h2>Confirm Details</h2>
+                <p>Please review your details before submitting.</p>
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="form-navigation">
+                <button type="button" id="prevBtn" class="nav-btn" disabled>Previous</button>
+                <button type="button" id="nextBtn" class="nav-btn">Next</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const steps = document.querySelectorAll('.form-step');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const form = document.getElementById('multiStepForm');
+    let currentStep = 0;
+
+    const updateStep = () => {
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', index === currentStep);
+        });
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.style.display = currentStep === steps.length - 1 ? 'none' : 'inline-block';
+    };
+
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < steps.length - 1) {
+            currentStep++;
+            updateStep();
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) {
+            currentStep--;
+            updateStep();
+        }
+    });
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('Form submitted successfully!');
+    });
+
+    updateStep();
+});
+
+    </script>
+</body>
+</html>

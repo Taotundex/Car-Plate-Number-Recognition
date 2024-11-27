@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Plate Recognitiion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="search-plate profile">
+        <div class="container">
+            <form action="profile.html" method="post" enctype="multipart/form-data" id="multiStepForm">
+                <!-- PERSONAL INFORMATION -->
+                <div class="steps active">
+                    <div class="form">
+                        <h2>Personal Details</h2>
+                        <div class="form-control">
+                            <label for="">Fullname:</label>
+                            <input type="text" name="name" id="name" placeholder="e. g. John Doe" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="">Email Address:</label>
+                            <input type="email" name="email" id="email" placeholder="e. g. johndoe@gmail.com" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="">Phone Number:</label>
+                            <input type="number" name="number" id="number" placeholder="e. g. +234-91 23456789" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="">Home Address:</label>
+                            <textarea name="address" id="address" placeholder="No 1, ABC street..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CAR INFORMATION -->
+                <div class="steps">
+                    <div class="form">
+                        <h2>Car Details</h2>
+                        <div class="form-control">
+                            <label for="plateNumber">Plate Number:</label>
+                            <input type="text" id="plateNumber" name="plateNumber" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="carModel">Car Model:</label>
+                            <input type="text" id="carModel" name="carModel" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="carColor">Car Color:</label>
+                            <input type="text" id="carColor" name="carColor" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="yearOfManufacture">Year Of Manufacture:</label>
+                            <input type="text" id="yearOfManufacture" name="yearOfManufacture" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CAR INFORMATION -->
+                <div class="steps">
+                    <div class="form">
+                        <h2>Upload Documents</h2>
+                        <div class="form-control">
+                            <label for="proofOfOwnership">Proof Of Ownership:</label>
+                            <img id="preview" src="#" alt="Image Preview" style="display: none; width: 100%; height: 150px;" class="z-[10] bg-[#e4e4e4] absolute top-[0%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[175px] h-[175px] rounded-full border-2 p-1 border-[#00006130]">
+                            <div class="inputs" id="default">
+                                <input type="file" id="proofOfOwnership" name="proofOfOwnership" required>
+                                <div class="upper">
+                                    <i class="bi bi-cloud-upload"></i>
+                                    Upload Proof Of Ownership
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <label for="plateRegistrationCertificate">Plate Registration Certificate</label>
+                            <img id="preview2" src="#" alt="Image Preview" style="display: none; width: 100%; height: 150px;" class="z-[10] bg-[#e4e4e4] absolute top-[0%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[175px] h-[175px] rounded-full border-2 p-1 border-[#00006130]">
+                            <div class="inputs" id="default2">
+                                <input type="file" id="plateRegistrationCertificate" name="plateRegistrationCertificate" required>
+                                <div class="upper">
+                                    <i class="bi bi-cloud-upload"></i>
+                                    Upload Plate Registration Certificate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <label for="insuranceDetails">Insurance Details:</label>
+                            <img id="preview3" src="#" alt="Image Preview" style="display: none; width: 100%; height: 150px;" class="z-[10] bg-[#e4e4e4] absolute top-[0%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[175px] h-[175px] rounded-full border-2 p-1 border-[#00006130]">
+                            <div class="inputs" id="default3">
+                                <input type="file" id="insuranceDetails" name="insuranceDetails" required>
+                                <div class="upper">
+                                    <i class="bi bi-cloud-upload"></i>
+                                    Upload Insurance Details
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                
+                <div class="form-navigation">
+                    <button type="button" id="prevBtn" class="nav-btn" disabled>Previous</button>
+                    <button type="button" id="nextBtn" class="nav-btn">Next</button>
+                    <button type="submit" name="submit" id="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+        const defaultEl = document.getElementById('default');
+        const defaultEl2 = document.getElementById('default2');
+        const defaultEl3 = document.getElementById('default3');
+        document.getElementById('proofOfOwnership').addEventListener('change', function (event) {
+            const file = event.target.files[0]; 
+            if (file) {
+                const reader = new FileReader(); 
+                reader.onload = function (e) {
+                const preview = document.getElementById('preview');
+                preview.src = e.target.result;
+                defaultEl.style.display = 'none';
+                preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        document.getElementById('plateRegistrationCertificate').addEventListener('change', function (event) {
+            const file = event.target.files[0]; 
+            if (file) {
+                const reader = new FileReader(); 
+                reader.onload = function (e) {
+                const preview2 = document.getElementById('preview2');
+                preview2.src = e.target.result;
+                defaultEl2.style.display = 'none';
+                preview2.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        document.getElementById('insuranceDetails').addEventListener('change', function (event) {
+            const file = event.target.files[0]; 
+            if (file) {
+                const reader = new FileReader(); 
+                reader.onload = function (e) {
+                const preview3 = document.getElementById('preview3');
+                preview3.src = e.target.result;
+                defaultEl3.style.display = 'none';
+                preview3.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const steps = document.querySelectorAll('.steps');
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const submit = document.getElementById('submit');
+            // const form = document.getElementById('multiStepForm');
+            let currentStep = 0;
+
+            const updateStep = () => {
+                steps.forEach((step, index) => {
+                    step.classList.toggle('active', index === currentStep);
+                });
+                prevBtn.disabled = currentStep === 0;
+                nextBtn.style.display = currentStep === steps.length - 1 ? 'none' : 'inline-block';
+                submit.style.display = currentStep === steps.length - 1 ? 'inline-block' : 'none';
+            };
+
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    updateStep();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateStep();
+                }
+            });
+
+            // form.addEventListener('submit', (event) => {
+            //     event.preventDefault();
+            //     alert('Form submitted successfully!');
+            // });
+
+            updateStep();
+        });
+    </script>
+</body> 
+</html>

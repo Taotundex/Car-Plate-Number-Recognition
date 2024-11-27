@@ -1,0 +1,221 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+.profile nav {
+    backdrop-filter: blur(50px);
+    position: sticky;
+    top: 0;
+    box-shadow: 2px 2px 8px #00006130;
+    background: #0000611c;
+    border-bottom: 1px solid #00006130;
+}
+.profile .nav {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.profile .nav .logo {
+    font-size: 30px;
+    font-weight: 900;
+    color: #000061;
+}
+.profile .nav .form-control {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    height: 50px;
+    background: #0000610c;
+    padding: 5px;
+    border-radius: 50px;
+}
+.profile .nav .form-control i {
+    width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 40px;
+    border: 1px solid #0000611c;
+    border-radius: 50%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #00006180;
+    color: white;
+}
+.profile .nav .form-control input{
+    width: 300px;
+    height: 100%;
+    border: 1px solid #0000611c;
+    background: #0000610c;
+    border-radius: 50px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+    padding: 0 10px;
+}
+.pro {
+    display: flex;
+    gap: 5px;
+    align-items: end;
+}
+.pro div {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: #000061;
+    font-weight: 600;
+}
+.profile .nav img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+
+
+.body .container-fluid {
+    width: 85%;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto;
+    gap: 50px;
+}
+.body .container-fluid .left {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.head {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #00006180;
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.head .bar{
+    width: 100%;
+    height: 2px;
+    background: #0000611c;
+}
+.body .container-fluid .left img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.body .work {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.body .work h2 {
+    font-weight: 800;
+    color: #000061;
+}
+.body .work p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000061bb;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.body .work small {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #00006180;
+}
+/* .flex small:last-child {
+    width: 40px;
+    height: 20px;
+    background: red;
+} */
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.details .one h2 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #000061;
+}
+.details .one p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #00006180;
+}
+.details .about p {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 5px;
+}
+.details .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 50px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #00006130;
+}
+.details .contact {
+    /* width: 500px; a*/
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.details .about span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000061;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #00006180;
+    background: #0000611c;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 767px) {
+    .profile .nav {
+        width: 90%;
+    }
+    .profile .nav .form-control {
+        display: none;
+    }
+    .body .container-fluid {
+        width: 90%;
+        margin: 30px auto;
+        grid-template-columns: 1fr;
+    }
+    .details .grid {
+        gap: 20px;
+    }
+    .details .about span {
+        font-size: 14px;
+    }
+}

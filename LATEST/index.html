@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Plate Recognitiion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="search-plate">
+        <div class="container">
+            <form action="form.html" method="post" enctype="multipart/form-data" id="myform">
+                <h2>Car Plate Number Recognition</h2>
+                <div class="form-control">
+                    <label for="">Upload Plate Number</label>
+                    <img id="preview" src="#" alt="Image Preview" style="display: none; width: 100%; height: 150px;" class="z-[10] bg-[#e4e4e4] absolute top-[0%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[175px] h-[175px] rounded-full border-2 p-1 border-[#00006130]">
+                    <div class="inputs" id="default">
+                        <input type="file" name="upload_plate" id="upload_plate" required>
+                        <div class="upper">
+                            <i class="bi bi-cloud-upload"></i>
+                            Upload plate number
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="recognize">Recognize</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+        const defaultEl = document.getElementById('default');
+        document.getElementById('upload_plate').addEventListener('change', function (event) {
+            const file = event.target.files[0]; 
+            if (file) {
+                const reader = new FileReader(); 
+                reader.onload = function (e) {
+                const preview = document.getElementById('preview');
+                preview.src = e.target.result;
+                defaultEl.style.display = 'none';
+                preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body> 
+</html>
